@@ -1,2 +1,2 @@
 // Wklej adres wdrożonej aplikacji Apps Script (kończy się na /exec).
-window.GRAFIK_APPS_SCRIPT_URL = '';
+window.GRAFIK_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbykslut0zhgEarPLeWIImtxXZEeOvuABnU6Sr0oADj4nmRl_BBFjKmPGrcBCndXoq6c/exec';
