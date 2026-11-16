@@ -14,3 +14,12 @@ Wpisz fikcyjne imię i nazwisko, zaznacz dni i kliknij **Wyślij ankietę**. Spr
 
 ## Ograniczenia
 Każde wysłanie tworzy nowy plik z losowym identyfikatorem. Brak nadpisywania zgłoszeń, weryfikacji tożsamości i zabezpieczonego panelu administracyjnego. `admin.html` jest informacyjne. Do prawdziwych danych pracowników niezbędna jest akceptacja organizacji, uwierzytelnianie, zabezpieczenia przed nadużyciami i procedury RODO.
+
+
+## Aktualizacja 1.0 — godziny pod datami (zlecenie)
+- Zaznaczanie wielu dat i zbiorowe kopiowanie godzin pozostają dostępne.
+- Przy każdej zapisanej dacie osoby na zleceniu pojawiają się godziny pod numerem dnia.
+- Przycisk ✎ otwiera edycję godzin tylko wybranego dnia.
+- Wysłany CSV zawiera osobne kolumny `od` i `do` dla każdej daty.
+- Google Apps Script `Code.gs` nie wymaga ponownego wdrożenia do tej zmiany.
+- Repozytorium aktualizuj zawartością paczki bez folderu `.git`; zachowaj własny `config.js`.
