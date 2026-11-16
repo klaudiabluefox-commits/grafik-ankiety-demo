@@ -18,3 +18,7 @@ Ta paczka bazuje na interfejsie GRAFIK Ankiety 0.6. Nie zawiera nazwisk ani zgł
 - GitHub Pages nie obsługuje Python/SQLite. Panel admina jest tylko stroną informacyjną.
 
 **Nie udostępniaj tej wersji do zbierania prawdziwych danych pracowników.** To publiczny podgląd i test funkcjonalności w przeglądarce.
+
+
+## Zmiana 0.8
+Po otwarciu formularza automatycznie pokazuje się kolejny miesiąc kalendarzowy (np. w listopadzie 2026 — grudzień 2026). Strzałki nadal umożliwiają zmianę miesiąca.
