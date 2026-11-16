@@ -1,24 +1,16 @@
-# GRAFIK Ankiety 0.7 — podgląd GitHub Pages
+# GRAFIK Ankiety 0.9 — GitHub Pages + Google Drive (test)
 
-Ta paczka bazuje na interfejsie GRAFIK Ankiety 0.6. Nie zawiera nazwisk ani zgłoszeń.
+## 1. Apps Script
+W istniejącym projekcie Google Apps Script zastąp cały plik `Code.gs` kodem z paczki. Funkcja `testZapisuCSV` i Anna Testowa nie będą już istnieć. Zapisz.
 
-## Publikacja na GitHub Pages
-1. Utwórz **publiczne** repozytorium GitHub, np. `grafik-ankiety-demo`.
-2. Prześlij **zawartość tego folderu** do głównego katalogu repozytorium (`index.html`, `app.js`, `style.css`, `admin.html`, `.nojekyll`). Nie przesyłaj baz SQLite, plików `.env`, haseł ani danych pracowników.
-3. Wejdź w **Settings → Pages → Build and deployment → Deploy from a branch**.
-4. Wybierz gałąź `main`, folder `/(root)` i kliknij Save.
-5. Po publikacji adres ma postać `https://TWOJ-LOGIN.github.io/grafik-ankiety-demo/`.
+## 2. Wdrożenie
+Kliknij **Wdróż → Nowe wdrożenie → Aplikacja internetowa**. Uruchamiaj jako **Ja**, dostęp **Każdy** (jeżeli opcja jest dostępna). Zatwierdź uprawnienia i skopiuj URL kończący się na `/exec`. UWAGA: publiczny endpoint może być spamowany i zużywać limit Dysku — używaj tylko do krótkich testów na fikcyjnych danych, nie udostępniaj szeroko.
 
-## Co działa
-- Kalendarz, polskie święta, blokada świąt, sobotnie święta i propozycja wolnego, wielokrotne zaznaczanie, kopiowanie godzin i statusów.
-- Testowy eksport CSV na **urządzeniu osoby wypełniającej**. Nie jest potwierdzona zgodność kolumn z importerem desktopowego GRAFIKU.
+## 3. Konfiguracja GitHub
+W pliku `config.js` wpisz URL jako wartość `window.GRAFIK_APPS_SCRIPT_URL`. Zastąp pliki repozytorium zawartością tej paczki, wykonaj commit i push. Odśwież stronę (Ctrl+F5).
 
-## Czego NIE ma
-- Wysyłania odpowiedzi na serwer, wspólnej bazy, logowania, edycji zgłoszenia po wysłaniu i panelu z prawdziwymi zgłoszeniami.
-- GitHub Pages nie obsługuje Python/SQLite. Panel admina jest tylko stroną informacyjną.
+## 4. Test
+Wpisz fikcyjne imię i nazwisko, zaznacz dni i kliknij **Wyślij ankietę**. Sprawdź folder na Dysku Google i w razie problemów **Apps Script → Wykonania**. Strona nie ma wiarygodnego potwierdzenia zapisu, więc przed ponowieniem sprawdź Dysk.
 
-**Nie udostępniaj tej wersji do zbierania prawdziwych danych pracowników.** To publiczny podgląd i test funkcjonalności w przeglądarce.
-
-
-## Zmiana 0.8
-Po otwarciu formularza automatycznie pokazuje się kolejny miesiąc kalendarzowy (np. w listopadzie 2026 — grudzień 2026). Strzałki nadal umożliwiają zmianę miesiąca.
+## Ograniczenia
+Każde wysłanie tworzy nowy plik z losowym identyfikatorem. Brak nadpisywania zgłoszeń, weryfikacji tożsamości i zabezpieczonego panelu administracyjnego. `admin.html` jest informacyjne. Do prawdziwych danych pracowników niezbędna jest akceptacja organizacji, uwierzytelnianie, zabezpieczenia przed nadużyciami i procedury RODO.
