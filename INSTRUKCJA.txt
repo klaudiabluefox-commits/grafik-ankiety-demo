@@ -1,0 +1,9 @@
+GRAFIK Ankieta 2.0 — publikacja GitHub Pages
+
+1. W repozytorium grafik-ankiety-demo podmień w katalogu głównym pliki index.html, style.css, app.js, config.js oraz .nojekyll.
+2. Commit changes.
+3. Sprawdź Settings > Pages: branch main, /(root).
+4. Otwórz stronę w oknie prywatnym.
+5. Przetestuj na danych fikcyjnych i sprawdź zapis do Google Drive.
+
+Uwaga: config.js zawiera adres endpointu Apps Script; zachowaj jego aktualne działające ustawienie, jeżeli w repozytorium jest nowsze.
