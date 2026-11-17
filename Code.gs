@@ -1,5 +1,10 @@
 // GRAFIK Ankiety 0.9 — tylko testowe zgłoszenia, bez publicznego odczytu.
-const FOLDER_ID = '1kUTOknV1Wi8jmkcaVFhzoYbg2AIdOY0o';
+// Wstaw identyfikatory trzech folderów na Dysku Google.
+const ROLE_FOLDER_IDS = {
+  pielegniarka: 'WPISZ_ID_FOLDERU_PIELEGNIAREK',
+  asystent: 'WPISZ_ID_FOLDERU_ASYSTENTOW',
+  polozna: 'WPISZ_ID_FOLDERU_POLOZNYCH'
+};
 const STATUSES = ['available','limited','preferred','leave','unavailable','dayoff'];
 function doPost(e) {
   const lock = LockService.getScriptLock();
@@ -10,6 +15,10 @@ function doPost(e) {
     const p = JSON.parse(raw);
     const employee = String(p.employee || '').trim().replace(/\s+/g,' ');
     const employment = String(p.employment || '');
+    const role = String(p.role || '');
+    if (!Object.prototype.hasOwnProperty.call(ROLE_FOLDER_IDS, role)) throw new Error('Nieprawidłowe stanowisko');
+    const folderId = ROLE_FOLDER_IDS[role];
+    if (!folderId || folderId.startsWith('WPISZ_')) throw new Error('Folder stanowiska nie został skonfigurowany');
     const month = String(p.month || '');
     const note = String(p.note || '');
     if (employee.length < 3 || employee.length > 100 || /[\r\n]/.test(employee)) throw new Error('Nieprawidłowe imię i nazwisko');
@@ -18,7 +27,7 @@ function doPost(e) {
     if (note.length > 500) throw new Error('Za długie uwagi');
     if (!Array.isArray(p.days) || p.days.length < 1 || p.days.length > 31) throw new Error('Nieprawidłowe dni');
     const seen = new Set();
-    const rows = [['pracownik','rodzaj_zatrudnienia','miesiac','data','status','od','do','uwagi']];
+    const rows = [['pracownik','rodzaj_zatrudnienia','miesiac','data','status','od','do','uwagi','stanowisko']];
     p.days.forEach(x => {
       const date = String(x.date || '');
       const status = String(x.status || '');
@@ -31,12 +40,12 @@ function doPost(e) {
       if (!STATUSES.includes(status)) throw new Error('Nieprawidłowy status');
       if ((start && !/^([01]\d|2[0-3]):[0-5]\d$/.test(start)) || (end && !/^([01]\d|2[0-3]):[0-5]\d$/.test(end)) || (start && end && start >= end)) throw new Error('Nieprawidłowe godziny');
       if (status==='dayoff' && employment!=='etat') throw new Error('Wolne za święto tylko dla etatu');
-      rows.push([employee,employment,month,date,status,start,end,note]);
+      rows.push([employee,employment,month,date,status,start,end,note,role]);
     });
     const safe = employee.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9_-]+/g,'_').slice(0,55);
     const filename = 'GRAFIK_'+month+'_'+safe+'_'+Utilities.getUuid().slice(0,8)+'.csv';
     const csv = '\uFEFF'+rows.map(row=>row.map(csvCell).join(';')).join('\r\n');
-    const file = DriveApp.getFolderById(FOLDER_ID).createFile(filename,csv,MimeType.CSV);
+    const file = DriveApp.getFolderById(folderId).createFile(filename,csv,MimeType.CSV);
     console.log('Zapisano '+file.getName());
     return ContentService.createTextOutput('OK');
   } catch(err) {
