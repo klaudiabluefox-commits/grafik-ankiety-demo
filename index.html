@@ -1,23 +1,424 @@
-<!doctype html><html lang="pl">
-<head><meta charset="utf-8">
- <link rel="icon" type="image/png" sizes="32x32" href="./favicon.png">
+
+<!doctype html>
+<html lang="pl">
+<head>
   <meta charset="UTF-8">
-  <script src="./config.js"></script>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>GRAFIK · Ankieta 2.0</title><link rel="stylesheet" href="./style.css?v=2-0-1">
-<style>.tools{display:flex;flex-wrap:wrap;gap:8px;align-items:end;margin:12px 0}.tools label{flex:1;min-width:130px}.tools button{min-height:40px}.day.marked{outline:3px solid #9d63d8;outline-offset:-3px}.notice{background:#f3e8fb;border-radius:10px;padding:12px;margin:12px 0}.hidden{display:none!important}.day{min-height:62px}.day small{font-size:10px}</style>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>GRAFIK · Ankieta 2.4</title>
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicon.png">
+  <link rel="stylesheet" href="./style.css?v=2-4-0">
+
+  <style>
+    .tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: end;
+      margin: 12px 0;
+    }
+
+    .tools label {
+      flex: 1;
+      min-width: 130px;
+    }
+
+    .tools button {
+      min-height: 40px;
+    }
+
+    .day.marked {
+      outline: 3px solid #9d63d8;
+      outline-offset: -3px;
+    }
+
+    .notice {
+      background: #f3e8fb;
+      border-radius: 10px;
+      padding: 12px;
+      margin: 12px 0;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .day {
+      min-height: 62px;
+    }
+
+    .day small {
+      font-size: 10px;
+    }
+  </style>
 </head>
-<body><main class="wrap"><header class="hero"><div class="hero-scene" aria-hidden="true"><span>▥ ▤ ▥</span><span>✦ ✧ ✦</span></div><small>✦ GRAFIK / ANKIETY ✦</small><h1>Twoja dyspozycyjność</h1><p>Wypełnij dyspozycyjność na kolejny miesiąc</p></header><section class="panel"><div class="section-title">▣ DANE PODSTAWOWE</div><div class="fields"><label>Imię i nazwisko<input id="employee" maxlength="100" placeholder="Imię i nazwisko"></label>
-<label>Stanowisko<select id="role" required><option value="">— Wybierz stanowisko —</option><option value="pielegniarka">Pielęgniarka / pielęgniarz</option><option value="asystent">Asystentka / asystent medyczny</option><option value="polozna">Położna / położny</option></select></label>
-<label>Rodzaj zatrudnienia<select id="employment"><option value="etat">Umowa o pracę</option><option value="zlecenie">Umowa zlecenie</option></select></label></div><p id="employmentHelp" class="hint"></p><div class="notice hidden"><strong>Masz już zgłoszenie?</strong><p class="hint">Wpisz to samo imię i nazwisko, wybierz miesiąc, podaj kod edycji i kliknij „Wczytaj”.</p><div class="tools"><label>Kod edycji<input id="editToken" autocomplete="off" placeholder="Kod z potwierdzenia"></label><button id="load" type="button" class="secondary">Wczytaj zgłoszenie</button></div></div></section><section class="panel"><div class="section-title">▦ TWOJA DYSPOZYCYJNOŚĆ W MIESIĄCU</div><div class="monthhead"><button id="prev" type="button">◀</button><h2 id="monthTitle"></h2><button id="next" type="button">▶</button></div><p class="hint">Zaznacz kilka dni i zastosuj wspólne godziny. Godziny są widoczne pod numerem dnia. Kliknij daty, aby je zaznaczyć, i użyj panelu edycji poniżej.</p><div class="statuses" id="statuses"><button data-status="available" class="active">● Dostępny/a</button><button data-status="limited">● Ograniczone godziny</button><button data-status="preferred">● Preferowany</button><button data-status="leave">● Urlop</button><button data-status="unavailable">● Niedostępny/a</button><button id="dayOffStatus" data-status="dayoff" class="hidden">● Wolne za święto (propozycja)</button><button data-status="select">▣ Zaznacz dni</button></div><p id="dayOffInfo" class="notice hidden"></p><div class="calendar-frame"><div class="calendar" id="calendar"></div></div><div class="editor-v2"><strong>Edytuj zaznaczone dni</strong><p class="hint">Kliknij daty w kalendarzu, a następnie wybierz status i godziny. Możesz zaznaczyć wiele dni.</p><div class="fields"><label>Status<select id="statusV2"><option value="available">Dostępność / praca</option><option value="limited">Ograniczone godziny</option><option value="preferred">Preferowany dzień</option><option value="leave">Urlop</option><option value="unavailable">Niedostępność</option><option value="dayoff" id="dayOffOptionV2">Wolne za święto (propozycja)</option></select></label></div><div class="fields" id="hoursFieldsV2"><label>Od<input type="time" id="startV2" value="07:00"></label><label>Do<input type="time" id="endV2" value="15:00"></label></div><div class="editor-actions"><button type="button" id="applyV2">Zastosuj do zaznaczonych dni</button><button type="button" class="secondary" id="unselectV2">Odznacz wybór</button></div><details class="extras-v2"><summary>Więcej opcji</summary><div class="tools"><button type="button" id="weekdaysV2" class="secondary">Zaznacz pn–pt</button><button type="button" id="allV2" class="secondary">Zaznacz cały miesiąc</button><button type="button" id="copyPrevV2" class="secondary">Kopiuj poprzedni miesiąc</button><button type="button" id="clearV2" class="secondary">Wyczyść miesiąc</button></div><p class="hint">Kopiowanie poprzedniego miesiąca przenosi statusy i godziny według numerów dni. Sprawdź weekendy.</p></details></div><div class="summary-v2" aria-live="polite"><strong>Podsumowanie miesiąca</strong><div class="summary-cards"><div class="summary-card"><strong id="summaryDays">0</strong><small>Dni z godzinami</small></div><div class="summary-card"><strong id="summaryHours">0 h</strong><small>Zadeklarowane godziny</small></div><div class="summary-card"><strong id="summaryAvg">0 h</strong><small>Średnio na dzień</small></div></div><p class="hint" id="summaryInfo">Podsumowanie dotyczy wpisanych godzin, nie zatwierdzonego grafiku.</p></div><div id="dayEditor" class="day-editor hidden"><strong>✎ Godziny: <span id="editingDate"></span></strong><p class="hint">Zmień godziny tylko dla tego dnia. Pozostałe daty pozostaną bez zmian.</p><div class="fields"><label>Od<input id="editStart" type="time"></label><label>Do<input id="editEnd" type="time"></label></div><div class="tools"><button id="saveDayHours" type="button">Zapisz godziny dnia</button><button id="closeDayEditor" type="button" class="secondary">Zamknij</button></div></div><div class="tools"><button id="weekdays" type="button" class="secondary">Zaznacz pn–pt</button><button id="all" type="button" class="secondary">Zaznacz cały miesiąc</button><button id="unselect" type="button" class="secondary">Odznacz wybór</button></div><div class="selection"><strong id="selectionTitle">Brak wybranych dni</strong><div class="fields"><label>Od<input id="start" type="time" value="07:00"></label><label>Do<input id="end" type="time" value="15:00"></label></div><div class="tools">
-<button id="applyHours" type="button">Kopiuj godziny na wybrane dni</button>
-<button id="applyStatus" type="button" class="secondary">Ustaw status dla wybranych</button>
-<button id="copyPrev" type="button" class="secondary">Kopiuj poprzedni miesiąc</button>
-<button id="clear" type="button" class="secondary">Wyczyść miesiąc</button>
-</div><p class="hint">Kopiowanie poprzedniego miesiąca przenosi statusy i godziny według numerów dni (np. 5 → 5). Przed wysłaniem sprawdź weekendy.</p></div>
-</section><section class="panel"><div class="section-title">✧ PREFERENCJE</div><div id="etatFields"><p>Etat: zaznacz planowane urlopy, dni niedostępności i preferencje dotyczące zmian.</p></div><div id="zlecenieFields" class="hidden"><p>Zlecenie: zaznacz kilka dni, ustaw wspólne godziny, a potem zmień wybrane dni przyciskiem ✎ w kalendarzu. Każda data zachowuje własne godziny.</p></div><label>Uwagi organizacyjne<textarea id="note" maxlength="500" rows="3" placeholder="Bez danych o stanie zdrowia"></textarea></label></section><div class="footer panel"><button id="send" class="primary" type="button">✦ WYŚLIJ ANKIETĘ ✦</button><p id="message" role="status">
-</p><div id="tokenBox" class="notice hidden"><strong>Twój kod edycji — zachowaj go!</strong>
-<p id="tokenText" style="overflow-wrap:anywhere"></p><button id="copyToken" type="button">Kopiuj kod</button>
-</div></div></main><iframe id="uploadFrame" name="uploadFrame" title="Wysyłka ankiety" style="display:none"></iframe><form id="uploadForm" method="POST" target="uploadFrame" style="display:none"><input type="hidden" name="payload" id="uploadPayload"></form>
+
+<body>
+<main class="wrap">
+
+  <header class="hero">
+    <div class="hero-scene" aria-hidden="true">
+      <span>▥ ▤ ▥</span>
+      <span>✦ ✧ ✦</span>
+    </div>
+
+    <small>✦ GRAFIK / ANKIETY ✦</small>
+    <h1>Twoja dyspozycyjność</h1>
+    <p>Wypełnij dyspozycyjność na kolejny miesiąc</p>
+  </header>
+
+  <section class="panel">
+    <div class="section-title">▣ DANE PODSTAWOWE</div>
+
+    <div class="fields">
+      <label>
+        Imię i nazwisko
+        <input
+          id="employee"
+          maxlength="100"
+          placeholder="Imię i nazwisko"
+        >
+      </label>
+
+      <label>
+        Stanowisko
+        <select id="role" required>
+          <option value="">— Wybierz stanowisko —</option>
+          <option value="pielegniarka">Pielęgniarka / pielęgniarz</option>
+          <option value="asystent">Asystentka / asystent medyczny</option>
+          <option value="polozna">Położna / położny</option>
+        </select>
+      </label>
+
+      <label>
+        Rodzaj zatrudnienia
+        <select id="employment">
+          <option value="etat">Umowa o pracę</option>
+          <option value="zlecenie">Umowa zlecenie</option>
+        </select>
+      </label>
+    </div>
+
+    <p id="employmentHelp" class="hint"></p>
+
+    <div class="notice hidden">
+      <strong>Masz już zgłoszenie?</strong>
+      <p class="hint">
+        Wpisz to samo imię i nazwisko, wybierz miesiąc,
+        podaj kod edycji i kliknij „Wczytaj”.
+      </p>
+
+      <div class="tools">
+        <label>
+          Kod edycji
+          <input
+            id="editToken"
+            autocomplete="off"
+            placeholder="Kod z potwierdzenia"
+          >
+        </label>
+
+        <button id="load" type="button" class="secondary">
+          Wczytaj zgłoszenie
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="section-title">
+      ▦ TWOJA DYSPOZYCYJNOŚĆ W MIESIĄCU
+    </div>
+
+    <div class="monthhead">
+      <button id="prev" type="button">◀</button>
+      <h2 id="monthTitle"></h2>
+      <button id="next" type="button">▶</button>
+    </div>
+
+    <p class="hint">
+      Kliknij daty w kalendarzu, aby je zaznaczyć.
+      Następnie wybierz status i zastosuj go do wybranych dni.
+      Możesz zaznaczyć kilka dni jednocześnie.
+    </p>
+
+    <div class="statuses" id="statuses">
+      <button type="button" data-status="select" class="active">
+        ▣ Zaznacz dni
+      </button>
+    </div>
+
+    <p id="dayOffInfo" class="notice hidden"></p>
+
+    <div class="calendar-frame">
+      <div class="calendar" id="calendar"></div>
+    </div>
+
+    <div class="editor-v2">
+      <strong>Edytuj zaznaczone dni</strong>
+
+      <p class="hint">
+        Wybierz status dla zaznaczonych dat.
+        Dostępne oznaczenia zależą od rodzaju zatrudnienia.
+      </p>
+
+      <div class="fields">
+        <label>
+          Status
+          <select id="statusV2">
+            <option value="morning">Praca rano</option>
+            <option value="afternoon">Praca po południu</option>
+            <option value="work12h">Praca cały dzień (12 h)</option>
+            <option value="unavailable">Nie mogę</option>
+            <option value="preferred">Sobota</option>
+            <option value="dayoff">Dzień wolny</option>
+            <option value="leave">Urlop</option>
+          </select>
+        </label>
+      </div>
+
+      <p id="shiftPreferenceHint" class="hint">
+        Praca rano, po południu i przez 12 godzin to preferencje,
+        a nie sztywne ograniczenia. Dodatkowe informacje
+        możesz wpisać w uwagach organizacyjnych.
+      </p>
+
+      <div class="fields hidden" id="hoursFieldsV2">
+        <label>
+          Od
+          <input type="time" id="startV2" value="07:00">
+        </label>
+
+        <label>
+          Do
+          <input type="time" id="endV2" value="15:00">
+        </label>
+      </div>
+
+      <div class="editor-actions">
+        <button type="button" id="applyV2">
+          Zastosuj do zaznaczonych dni
+        </button>
+
+        <button type="button" class="secondary" id="unselectV2">
+          Odznacz wybór
+        </button>
+      </div>
+
+      <details class="extras-v2">
+        <summary>Więcej opcji</summary>
+
+        <div class="tools">
+          <button type="button" id="weekdaysV2" class="secondary">
+            Zaznacz pn–pt
+          </button>
+
+          <button type="button" id="allV2" class="secondary">
+            Zaznacz cały miesiąc
+          </button>
+
+          <button type="button" id="copyPrevV2" class="secondary">
+            Kopiuj poprzedni miesiąc
+          </button>
+
+          <button type="button" id="clearV2" class="secondary">
+            Wyczyść miesiąc
+          </button>
+        </div>
+
+        <p class="hint">
+          Kopiowanie poprzedniego miesiąca przenosi statusy
+          według numerów dni. Sprawdź oznaczenia weekendów.
+        </p>
+      </details>
+    </div>
+
+    <div class="summary-v2" aria-live="polite">
+      <strong>Podsumowanie miesiąca</strong>
+
+      <div class="summary-cards">
+        <div class="summary-card">
+          <strong id="summaryDays">0</strong>
+          <small>Dni z godzinami</small>
+        </div>
+
+        <div class="summary-card">
+          <strong id="summaryHours">0 h</strong>
+          <small>Zadeklarowane godziny</small>
+        </div>
+
+        <div class="summary-card">
+          <strong id="summaryAvg">0 h</strong>
+          <small>Średnio na dzień</small>
+        </div>
+      </div>
+
+      <p class="hint" id="summaryInfo">
+        Podsumowanie dotyczy wpisanych godzin,
+        nie zatwierdzonego grafiku.
+      </p>
+    </div>
+
+    <div id="dayEditor" class="day-editor hidden">
+      <strong>
+        ✎ Godziny: <span id="editingDate"></span>
+      </strong>
+
+      <p class="hint">
+        Zmień godziny tylko dla tego dnia.
+        Pozostałe daty pozostaną bez zmian.
+      </p>
+
+      <div class="fields">
+        <label>
+          Od
+          <input id="editStart" type="time">
+        </label>
+
+        <label>
+          Do
+          <input id="editEnd" type="time">
+        </label>
+      </div>
+
+      <div class="tools">
+        <button id="saveDayHours" type="button">
+          Zapisz godziny dnia
+        </button>
+
+        <button id="closeDayEditor" type="button" class="secondary">
+          Zamknij
+        </button>
+      </div>
+    </div>
+
+    <div class="tools">
+      <button id="weekdays" type="button" class="secondary">
+        Zaznacz pn–pt
+      </button>
+
+      <button id="all" type="button" class="secondary">
+        Zaznacz cały miesiąc
+      </button>
+
+      <button id="unselect" type="button" class="secondary">
+        Odznacz wybór
+      </button>
+    </div>
+
+    <div class="selection">
+      <strong id="selectionTitle">
+        Brak wybranych dni
+      </strong>
+
+      <div class="fields">
+        <label>
+          Od
+          <input id="start" type="time" value="07:00">
+        </label>
+
+        <label>
+          Do
+          <input id="end" type="time" value="15:00">
+        </label>
+      </div>
+
+      <div class="tools">
+        <button id="applyHours" type="button">
+          Kopiuj godziny na wybrane dni
+        </button>
+
+        <button id="applyStatus" type="button" class="secondary">
+          Ustaw status dla wybranych
+        </button>
+
+        <button id="copyPrev" type="button" class="secondary">
+          Kopiuj poprzedni miesiąc
+        </button>
+
+        <button id="clear" type="button" class="secondary">
+          Wyczyść miesiąc
+        </button>
+      </div>
+
+      <p class="hint">
+        Kopiowanie poprzedniego miesiąca przenosi statusy
+        i godziny według numerów dni.
+        Przed wysłaniem sprawdź weekendy.
+      </p>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="section-title">✧ PREFERENCJE</div>
+
+    <div id="etatFields">
+      <p>
+        Etat: zaznacz preferowane zmiany, soboty,
+        dni wolne, urlopy i dni niedostępności.
+      </p>
+    </div>
+
+    <div id="zlecenieFields" class="hidden">
+      <p>
+        Zlecenie: zaznacz dostępne dni i godziny.
+        Każda data może mieć własny przedział godzinowy.
+      </p>
+    </div>
+
+    <label>
+      Uwagi organizacyjne
+      <textarea
+        id="note"
+        maxlength="500"
+        rows="3"
+        placeholder="Np. preferuję poranki, ale mogę też pracować po południu. Bez danych o stanie zdrowia."
+      ></textarea>
+    </label>
+  </section>
+
+  <div class="footer panel">
+    <button id="send" class="primary" type="button">
+      ✦ WYŚLIJ ANKIETĘ ✦
+    </button>
+
+    <p id="message" role="status"></p>
+
+    <div id="tokenBox" class="notice hidden">
+      <strong>Twój kod edycji — zachowaj go!</strong>
+      <p id="tokenText" style="overflow-wrap:anywhere"></p>
+
+      <button id="copyToken" type="button">
+        Kopiuj kod
+      </button>
+    </div>
+  </div>
+
+</main>
+
+<iframe
+  id="uploadFrame"
+  name="uploadFrame"
+  title="Wysyłka ankiety"
+  style="display:none"
+></iframe>
+
+<form
+  id="uploadForm"
+  method="POST"
+  target="uploadFrame"
+  style="display:none"
+>
+  <input
+    type="hidden"
+    name="payload"
+    id="uploadPayload"
+  >
+</form>
+
 <script src="./config.js"></script>
-<script src="./app.js?v=2-1-0"></script></body></html>
+<script src="./app.js?v=2-4-0"></script>
+
+</body>
+</html>
