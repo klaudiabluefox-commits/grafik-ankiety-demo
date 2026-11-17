@@ -15,34 +15,11 @@
 /* Ankieta 2.0 – uproszczony panel */
 .editor-v2{border:1px solid #d8bde9;border-radius:12px;padding:14px;margin:14px 0;background:#faf6fd}.editor-v2 .fields{margin:10px 0}.editor-v2 select{width:100%;min-height:40px}.editor-v2 .editor-actions{display:flex;gap:8px;flex-wrap:wrap}.editor-v2 .editor-actions button{flex:1;min-width:150px}.extras-v2{margin-top:12px;border-top:1px dashed #d8bde9;padding-top:12px}.extras-v2 summary{cursor:pointer;font-weight:700;padding:8px}.summary-v2{margin:14px 0;padding:14px;border:1px solid #d8bde9;border-radius:12px;background:#f7f0fc}.summary-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:10px}.summary-card{background:#fff;border:1px solid #e2d3ec;border-radius:9px;padding:12px;text-align:center}.summary-card strong{display:block;font-size:1.5rem;color:#653a79}.summary-card small{display:block;margin-top:4px}.day .day-hours{display:block;font-size:11px;font-weight:700;margin-top:4px;white-space:normal;overflow-wrap:anywhere}.day-tile .day-edit{font-size:13px}.day{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}.day small{font-size:10px}.selection{display:none!important}.statuses{display:none!important}@media(max-width:600px){.summary-cards{gap:4px}.summary-card{padding:8px 3px}.summary-card strong{font-size:1.2rem}}
 
-/* ANKIETA 2.4 — oznaczenia etatu */
+/* Ankieta 2.2 — odrębny kolor wolnego za przepracowaną sobotę */
+.day.work12h{background:#d7f3ef;border-color:#7bbcb4}.day.work12h small{color:#17675e;font-weight:900}
+.statuses button[data-status=saturdayoff]{background:#d7f3ef}
 
-.day.morning {
-  background: #dceefb;
-  border-color: #87b8d8;
-}
-.day.morning small {
-  color: #205d83;
-}
-
-.day.afternoon {
-  background: #eee3fc;
-  border-color: #b59bdc;
-}
-.day.afternoon small {
-  color: #69458c;
-}
-
-.day.work12h {
-  background: #d7f3ef;
-  border-color: #7bbcb4;
-}
-.day.work12h small {
-  color: #17675e;
-}
-
-#shiftPreferenceHint {
-  background: #f6eafa;
-  border-left: 4px solid #86529b;
-  padding: 10px 12px;
-}
+/* Ankieta 2.3: preferencje etatu */
+.day.morning{background:#dceefb;border-color:#87b8d8}.day.morning small{color:#205d83}
+.day.afternoon{background:#eee3fc;border-color:#b59bdc}.day.afternoon small{color:#69458c}
+#shiftPreferenceHint{background:#f6eafa;border-left:4px solid #86529b;padding:10px 12px}
