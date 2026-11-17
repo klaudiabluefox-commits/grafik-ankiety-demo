@@ -2,7 +2,7 @@ ANKIETA 2.1 — stanowiska i osobne foldery CSV
 
 1. Na Dysku Google utwórz trzy foldery: Pielęgniarki, Asystenci medyczni, Położne.
 2. Skopiuj ID każdego folderu z jego adresu URL (część po /folders/).
-3. W Code.gs podmień trzy wartości WPISZ_ID_... na odpowiednie ID.
+3. ID folderów są już wpisane w Code.gs. Sprawdź ich przypisanie do stanowisk.
 4. Otwórz dotychczasowy projekt Google Apps Script i podmień jego kod na nowy Code.gs.
 5. Wdróż nową wersję istniejącego wdrożenia aplikacji internetowej (Zarządzaj wdrożeniami -> Edytuj -> Nowa wersja), zachowując adres /exec.
 6. Na GitHub wgraj index.html, app.js oraz opcjonalnie pozostałe niezmienione pliki.

@@ -1,9 +1,9 @@
 // GRAFIK Ankiety 0.9 — tylko testowe zgłoszenia, bez publicznego odczytu.
 // Wstaw identyfikatory trzech folderów na Dysku Google.
 const ROLE_FOLDER_IDS = {
-  pielegniarka: 'WPISZ_ID_FOLDERU_PIELEGNIAREK',
-  asystent: 'WPISZ_ID_FOLDERU_ASYSTENTOW',
-  polozna: 'WPISZ_ID_FOLDERU_POLOZNYCH'
+  pielegniarka: '1BhsrfEXgnuQbyIsrlvFBHJCuKqIwFJ-h',
+  asystent: '1tuGCV42BXaFW89eHuBc08pwnkRhv-W2s',
+  polozna: '1R-rQAtbzvgUrDgfGzfNEJ-usjGEXzmtA'
 };
 const STATUSES = ['available','limited','preferred','leave','unavailable','dayoff'];
 function doPost(e) {
